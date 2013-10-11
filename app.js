@@ -9,8 +9,8 @@ var path = require('path');
 var io = require('socket.io');
 var app = express();
 //user module
-var chat = require('./routes/chat');
-var chatService = require('./module/chatService');
+var Controller = require('./src/controller');
+var actionService = require('./src/actionService');
 
 // all environments システム環境設定
 app.set('port', process.env.PORT || 3000);
@@ -28,18 +28,20 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
-
-
+//ユーザー　変数	
+var users = {};
+controller = new Controller(users);
 //路由
-app.get('/', chat.index);
-app.get('/signin', chat.get_signin);
-app.post('/signin', chat.post_signin);
+app.get('/', controller.index);
+app.get('/signin', controller.get_signin);
+app.post('/signin', controller.post_signin);
 
 //Http サーバを起動		
 HttpServer = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
+
 //socket　サーバを起動
 io = io.listen(HttpServer);
-//chat　serviceを起動
-new chatService(io,chat).start();
+//action serviceを起動
+new actionService(io,users).start();

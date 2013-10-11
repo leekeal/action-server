@@ -5,17 +5,21 @@ $(document).ready(function(){
 		im:'imageHandler'
 	};
 
-	service.putAction('so','hello world');
-	service.putAction('im','my image');
+	//service.putAction('so','hello world');
+	//service.putAction('im','my image');
 
 });
 
 
 
 
+
+
+
+
 function soundHandler(data){
-	console.log(data);
+	console.log('音楽を'+data+'に変更した');
 }
 function imageHandler(data){
-	console.log(data);
+	console.log('画像を'+data+'に変更した');
 }
