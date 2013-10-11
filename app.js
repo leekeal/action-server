@@ -14,8 +14,11 @@ var actionService = require('./src/actionService');
 
 // all environments システム環境設定
 app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'ejs');
+app.set('views', __dirname + '/public');
+// app.set('view engine', 'ejs');
+app.set('view engine', 'html');
+app.engine('.html', require('ejs').__express);
+
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -28,7 +31,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
-//ユーザー　変数	
+//ユーザー変数	
 var users = {};
 controller = new Controller(users);
 //路由

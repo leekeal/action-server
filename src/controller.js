@@ -9,7 +9,7 @@ module.exports = function(users){
         if (req.cookies.user == null) {
             res.redirect('/signin');
         } else {
-            res.render('index', { title: 'Express' });
+            res.render('index');
         }
     };
 

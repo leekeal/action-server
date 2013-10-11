@@ -29,7 +29,6 @@ actionService = function(io,users){
 
 	action = function(socket){
 		socket.on('action',function(data){
-			console.log('--->'+data);
 			socket.broadcast.emit('action', data);
 		});
 	}
