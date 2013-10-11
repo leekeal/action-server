@@ -3,7 +3,7 @@
 * GET home page.
 */
 module.exports = function(users){
-    this.users = users; 
+    var users = users; 
     //首页
     this.index = function(req, res){
         if (req.cookies.user == null) {
@@ -19,7 +19,7 @@ module.exports = function(users){
     }
     //登录处理
     this.post_signin = function(req,res){
-        if (this.users[req.body.name]) {
+        if (users[req.body.name]) {
             //存在，则不允许登陆
             res.redirect('/signin');
         }

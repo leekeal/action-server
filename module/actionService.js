@@ -1,23 +1,23 @@
 actionService = function(io,users){
 	self = this;
-	//this前缀的 == public
 	this.io = io;
 	this.users = users;
 
 	this.start = function(){
-		watchConnection();
+		this.watchConnection();
 	}
-	// private
-	watchConnection = function(){
-		self.io.sockets.on('connection',function(socket){
+
+	this.watchConnection = function(){
+		this.io.sockets.on('connection',function(socket){
 			self.socket = socket;
-			online(socket);
-			action(socket);
-			disconnect(socket);
+			self.online(socket);
+			self.say(socket);
+			self.action(socket);
+			self.disconnect(socket);
 		});
 	}
 
-	online = function(socket){
+	this.online = function(socket){
 		socket.on('online',function(data){
 			socket.name = data.user;
 			if(!self.users[data.user]){
@@ -27,14 +27,36 @@ actionService = function(io,users){
 		});
 	}
 
-	action = function(socket){
+	this.say = function(socket){
+		//有人发话
+		socket.on('say', function (data) {
+			if (data.to == 'all') {
+				//向其他所有用户广播该用户发话信息
+				socket.broadcast.emit('say', data);
+			} 
+			else {
+				//向特定用户发送该用户发话信息
+				//clients 为存储所有连接对象的数组
+				var clients = io.sockets.clients();
+				//遍历找到该用户
+				clients.forEach(function (client) {
+				if (client.name == data.to) {
+				//触发该用户客户端的 say 事件
+				client.emit('say', data);
+				}
+				});
+			}
+		});
+	}
+
+	this.action = function(socket){
 		socket.on('action',function(data){
 			console.log('--->'+data);
 			socket.broadcast.emit('action', data);
 		});
 	}
 
-	disconnect = function(socket){
+	this.disconnect = function(socket){
 		//有人下线
 		socket.on('disconnect', function() {
 			//若 users 对象中保存了该用户名
