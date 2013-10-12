@@ -1,21 +1,35 @@
 <!doctype html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>聊天室</title>
-  <script type="text/javascript" src="js/jquery.min.js"></script>
-  <script type="text/javascript" src="js/jquery.cookie.js"></script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script type="text/javascript" src="js/service.lib.js"></script>
-  <script type="text/javascript" src="js/example.js"></script>
-  <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
-</head>
+  <head>
+    <meta charset="utf-8">
+    <title>聊天室</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.cookie.js"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="js/service.lib.js"></script>
+    <script type="text/javascript" src="js/example.js"></script>
+    <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+  </head>
 <body>
-  <nav class="navbar navbar-default" role="navigation">
-  <div class="navbar-header">
-     <a class="navbar-brand" href="#">EXAMPLE</a>
-  </div>
- </nav>
- <div class="alert alert-success" id="bg-test">Change background color example</div>
+  <div class="container">
+    <nav class="navbar navbar-default" role="navigation">
+       <a class="navbar-brand" href="#">EXAMPLE</a>
+       <p class="navbar-text pull-right">
+          <span id="username"></span> 
+          <button type="button" class="btn btn-default" id="logout">ログアウト</button>
+       </p>
+   </nav>
+   <div class="row">
+    <div class="col-xs-10 col-md-10">
+      <span class="alert alert-success" id="example">example   example   example</span>
+    </div>
+
+    <div class="col-xs-2 col-md-2">
+      <h5>ユーザー一覧</h5>
+      <ul class="list-group" id="userList"></ul>
+    </div>
+   </div>
+ </div>
 </body>
 </html>

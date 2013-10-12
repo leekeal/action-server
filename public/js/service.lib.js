@@ -5,8 +5,7 @@ service.putAction(type,data);
 */
 
 /*
-//新しいactionがあったら、この関数を実行される。		
-service.actionEvent= function(data){ここコマンドを書く	};
+
 */
 
 function service(){
@@ -16,15 +15,31 @@ function service(){
 	this.from = $.cookie('user');
 
 	//実行関数	
-	this.listenAction();
 	this.login();
+	this.actionEvent();
+	this.onlineEvent();
+	this.offlineEvent();
 }
 
-service.prototype.listenAction = function(){
+service.prototype.actionEvent = function(){
 	this.socket.on('action',function(data){
 		fn = window[self.actionHandlers[data.type]];
 		if (typeof(fn) == 'function') {
 			fn(data.data);
+		};
+	});
+}
+service.prototype.onlineEvent = function(){
+	this.socket.on('online',function(data){
+		if(typeof(listenOnlineEvent) == 'function'){
+			listenOnlineEvent(data.users,data.user);
+		}
+	});
+}
+service.prototype.offlineEvent = function(){
+	this.socket.on('offline',function(data){
+		if (typeof(listenOfflineEvent) == 'function') {
+			listenOfflineEvent(data.users,data.user);
 		};
 	});
 }
