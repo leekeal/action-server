@@ -7,8 +7,8 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var io = require('socket.io');
-var sessionStore = new express.session.MemoryStore({reapInterval: 60000 * 10});
 var app = express();
+var sessionStore = new express.session.MemoryStore({reapInterval: 60000 * 10});
 //user module
 var Controller = require('./src/controller');
 var actionService = require('./src/actionService');

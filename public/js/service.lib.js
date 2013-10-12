@@ -12,10 +12,8 @@ function service(){
 	self = this;
 	this.socket = io.connect();
 	this.test = 1;
-	this.from = $.cookie('user');
 
 	//実行関数	
-	this.login();
 	this.actionEvent();
 	this.onlineEvent();
 	this.offlineEvent();
@@ -46,10 +44,6 @@ service.prototype.offlineEvent = function(){
 
 service.prototype.putAction = function(type,data){
 	this.socket.emit('action',{type:type,data:data});
-}
-
-service.prototype.login = function(){
-	this.socket.emit('online',{user:this.from});
 }
 
 service.prototype.logout = function(){

@@ -3,7 +3,8 @@
 * GET home page.
 */
 module.exports = function(sessionStore){
-    var sessionStore = sessionStore; 
+    var sessionStore = sessionStore;
+    var users = {};
     //首页
     this.index = function(req, res){
         if (req.session.user == null) {
@@ -18,11 +19,19 @@ module.exports = function(sessionStore){
     }
     //登录处理
     this.post_signin = function(req,res){
-        req.session.user = req.body.name;
-        res.cookie("user", req.body.name, {maxAge: 1000*60*60*24*30});
-        res.redirect('/'); 
+        if (req.body.name&&users[req.body.name]!=req.body.name) {
+            req.session.user = req.body.name;
+            //socket 通知上线判断是不是自己需要用到
+            res.cookie("user", req.body.name, {maxAge: 1000*60*60*24*30});
+            users[req.body.name] = req.body.name;
+            res.redirect('/');
+        }
+        else{
+            res.redirect('/signin');
+        } 
     }
     this.get_logout = function(req,res){
+        delete users[req.session.user];
         req.session.user = null;
         res.send('logout ok');
     }
