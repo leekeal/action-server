@@ -1,29 +1,56 @@
-actionService = function(io,users){
+actionService = function(io,sessionStore){
 	self = this;
 	//this前缀的 == public
 	this.io = io;
-	this.users = users;
+	this.users = {};
 
 	this.start = function(){
+		//sessionを確認する
+		authorization();
+		//connectionを始まる
 		watchConnection();
 	}
+
+	//sessionを確認する関数　authorization-承認-授权
+	authorization = function(){
+		self.io.set('authorization', function(handshakeData, callback){
+			 //没有cookie则退出
+      		if (!handshakeData.headers.cookie) return callback('socket.io: no found cookie.', false);
+			var signedCookies = require('express/node_modules/cookie').parse(handshakeData.headers.cookie);
+			handshakeData.cookies = require('express/node_modules/connect/lib/utils').parseSignedCookies(signedCookies,
+			'action');
+
+				//根据sessionId找username
+	      	sessionStore.get(handshakeData.cookies['sid'], function(err,session){
+		        if(err || !session) return callback('socket.io: no found session.', false);
+		        handshakeData.session = session;
+		        if(handshakeData.session.user){ 
+		          return callback(null, true);
+		        }
+		        else{
+		          return callback('socket.io: no found session.user', false);
+	       		}
+	     	});
+	    });
+	}
+	
 	// private
 	watchConnection = function(){
 		self.io.sockets.on('connection',function(socket){
-			self.socket = socket;
-			online(socket);
+			//authorization関数のsessionを判断するが通った、会話を始まる
+			var session = socket.handshake.session;//session
+			var user = session.user;
+			//現在のsocketに名前をつける
+			socket.name = user;
+			//users　list中にuserが不存在の場合、userをusersに加える
+			if(!self.users[user]){
+				self.users[user] = user;
+			}
+			//自分を含めて、全員に今ログインしたユーザーの名前を放送する
+			self.io.sockets.emit('online',{users:self.users,user:user});
+
 			action(socket);
 			disconnect(socket);
-		});
-	}
-
-	online = function(socket){
-		socket.on('online',function(data){
-			socket.name = data.user;
-			if(!self.users[data.user]){
-				self.users[data.user] = data.user;
-			}
-			self.io.sockets.emit('online',{users:self.users,user:data.user});
 		});
 	}
 
@@ -32,7 +59,7 @@ actionService = function(io,users){
 			socket.broadcast.emit('action', data);
 		});
 	}
-
+	//オフライン　イベントを処理
 	disconnect = function(socket){
 		//有人下线
 		socket.on('disconnect', function() {
@@ -45,6 +72,8 @@ actionService = function(io,users){
 			}
 		});
 	}
+
+
 }
 
 

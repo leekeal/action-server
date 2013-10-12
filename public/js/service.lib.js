@@ -53,8 +53,11 @@ service.prototype.login = function(){
 }
 
 service.prototype.logout = function(){
-	$.cookie('user',null);
-	location.reload();
+	console.log('???');
+	$.get("/logout", function(data){
+		console.log('I logout!');
+		location.reload();
+	});
 }
 
 service.prototype.time = function(){
