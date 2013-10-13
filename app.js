@@ -8,13 +8,16 @@ var http = require('http');
 var path = require('path');
 var io = require('socket.io');
 var app = express();
-var sessionStore = new express.session.MemoryStore({reapInterval: 60000 * 10});
 //user module
 var Controller = require('./src/controller');
 var actionService = require('./src/actionService');
 
+var sessionStore = new express.session.MemoryStore({reapInterval: 60000 * 10});
+//socket online user list
+sessionStore.users = {};
+
 // all environments システム環境設定
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 9000);
 app.set('views', __dirname + '/public');
 // app.set('view engine', 'ejs');
 app.set('view engine', 'html');
@@ -49,7 +52,7 @@ app.get('/logout', controller.get_logout);
 
 //Http サーバを起動		
 HttpServer = http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+  console.log('------>Action-Server listening on port ' + app.get('port'));
 });
 //socket　サーバを起動
 io = io.listen(HttpServer);

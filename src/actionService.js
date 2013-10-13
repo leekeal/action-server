@@ -2,7 +2,7 @@ actionService = function(io,sessionStore){
 	self = this;
 	//this前缀的 == public
 	this.io = io;
-	this.users = {};
+
 
 	this.start = function(){
 		//sessionを確認する
@@ -42,12 +42,12 @@ actionService = function(io,sessionStore){
 			var user = session.user;
 			//現在のsocketに名前をつける
 			socket.name = user;
-			//users　list中にuserが不存在の場合、userをusersに加える
-			if(!self.users[user]){
-				self.users[user] = user;
+			//sessionStore.users　list中にuserが不存在の場合、userをsessionStore.usersに加える
+			if(!sessionStore.users[user]){
+				sessionStore.users[user] = user;
 			}
 			//自分を含めて、全員に今ログインしたユーザーの名前を放送する
-			self.io.sockets.emit('online',{users:self.users,user:user});
+			self.io.sockets.emit('online',{users:sessionStore.users,user:user});
 
 			action(socket);
 			disconnect(socket);
@@ -63,12 +63,12 @@ actionService = function(io,sessionStore){
 	disconnect = function(socket){
 		//有人下线
 		socket.on('disconnect', function() {
-			//若 users 对象中保存了该用户名
-			if (self.users[socket.name]) {
-				//从 users 对象中删除该用户名
-				delete self.users[socket.name];
+			//若 sessionStore.users 对象中保存了该用户名
+			if (sessionStore.users[socket.name]) {
+				//从 sessionStore.users 对象中删除该用户名
+				delete sessionStore.users[socket.name];
 				//向其他所有用户广播该用户下线信息
-				socket.broadcast.emit('offline', {users: self.users, user: socket.name});
+				socket.broadcast.emit('offline', {users: sessionStore.users, user: socket.name});
 			}
 		});
 	}
