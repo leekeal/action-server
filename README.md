@@ -1,7 +1,7 @@
 action-server
-====================================================
+====================================
 起動：
-======
+-------------
 1.action serviceのインスタンスを作る。
 		service = new service();
 
@@ -11,29 +11,32 @@ action-server
 				so:'changeSoundHandler',
 				color:'changeColorHandler',
 			};
-
+		
 		2:  service.actionHandlers['color'] = 'changeColorHandler';
 
-====================================================
+________________________________________________________________________
+
 関数/function
-=============
+-------------
 
 1.サーバへactionを送る関数:  service.putAction(type,data);
 
-						  type:このactionの名前。
-						  		dataのフォーマット:　string;
-						  data: actionの内容。
-						  		dataのフォーマット:　string;object;配列;　自分好きなように
+		type:このactionの名前。
+			dataのフォーマット:　string;
+		data: actionの内容。
+			dataのフォーマット:　string;object;配列;　自分好きなように
 
 2.ログアウト関数: service.logout();
 
 
-====================================================
+________________________________________________________________________
 ログイン
-========
+-------------
  ログインはフォームからpostでユーザの情報を送る。
- 	<form method="post" >
-		<label for="name">ユーザー名</label>
-		<input type="text" name="name"/>
-		<button class="btn btn-primary" type="submit">ログイン</button>
-  	</form>
+ 
+		<form method="post">
+			<label for="name">ユーザー名</label>
+			<input type="text" name="name"/>
+			<button class="btn btn-primary" type="submit">ログイン</button>
+		</form>
+________________________________________________________________________
