@@ -2,7 +2,8 @@ action-server
 ====================================================
 起動：
 ======
-service = new service();
+1.action serviceのインスタンスを作る。
+		service = new service();
 
 2.actionと関数の対応表を設定する。
 
@@ -23,7 +24,7 @@ service = new service();
 						  		dataのフォーマット:　string;
 						  data: actionの内容。
 						  		dataのフォーマット:　string;object;配列;　自分好きなように
-						  		
+
 2.ログアウト関数: service.logout();
 
 
