@@ -1,6 +1,8 @@
-//実行
+//htmlを読み込む完了から　含んているプログラムを実行
 $(document).ready(function(){
+	//action交換サービスをスタートする
 	service = new service();
+	//この表でputactionからくれたデータを解析して、対応する関すを呼び出す
 	service.actionHandlers = {
 		so:'soundHandler',
 		im:'imageHandler',
@@ -15,11 +17,20 @@ $(document).ready(function(){
 		service.logout();
 	});
 
+	//ドラッグイベントをモニターする
 	$("#example").draggable({
+		containment:"#container",
+		scroll: false,
 		drag: function(event,ui){
 			x = $(this).position();
 			service.putAction('drag',{top:x.top,left:x.left});
 		}
+	});
+	//アニメーションを選ぶボタンをモニターする
+	$(".animation button").click(function(){
+		animationName = $(this).attr('animation');
+		animationHandler(animationName);
+		service.putAction('am',animationName);
 	});
 
 });
@@ -36,6 +47,7 @@ function sizeHandler(data){
 function changeBackgroundColor(data){
 	$("#example").css("background-color",data);
 }
+//アニメーションを実行関数
 function animationHandler(data){
 	am1 = function(){
 		var div=$("#example");
@@ -43,16 +55,31 @@ function animationHandler(data){
     div.animate({width:'300px',opacity:'0.8'},"slow");
     div.animate({height:'100px',opacity:'0.4'},"slow");
     div.animate({width:'100px',opacity:'0.8'},"slow");
+    div.animate({height:'80px',opacity:'0.4'},"slow");
+    div.animate({width:'80px',opacity:'0.8'},"slow");
+    div.animate({height:'300px',opacity:'0.4'},"slow");
+    div.animate({width:'300px',opacity:'0.8'},"slow");
+    div.animate({height:'80px',opacity:'0.4'},"slow");
+    div.animate({width:'80px',opacity:'0.8'},"slow");
 	}
 	am2 = function(){
 		var div=$("#example");
-		div.animate({width:'300px'});
+    	div.animate({left:'10px',opacity:'0.8'},"slow");
+    	div.animate({left:'300px',opacity:'0.8'},"slow");
+    	div.animate({top:'300px',opacity:'0.8'},"slow");
+    	div.animate({left:'150px',opacity:'0.8'},"slow");
+    	div.animate({top:'10px',opacity:'0.8'},"slow");
+    	div.animate({top:'300px',opacity:'0.8'},2000);
+    	div.animate({left:'200px',opacity:'0.8'},"slow");
+    	div.animate({left:'100px',opacity:'0.8'},"slow");
+    	div.animate({top:'10px',opacity:'0.8'},"slow");
+    	div.animate({left:'10px',opacity:'0.8'},"slow");
 	}
 	window[data]();
 }
 
 
-
+//ログインイベントを処理する
 function listenOnlineEvent(users,user){
 	if ($.cookie('user') == user) {
 		$("#username").text(user);
@@ -65,6 +92,7 @@ function listenOnlineEvent(users,user){
 	}
 	console.log(user+'ログインした');
 }
+//ログアウトイベントを処理する
 function listenOfflineEvent(users,user){
 	$(".user#"+user).remove();
 	console.log(user+'ログアウトした');

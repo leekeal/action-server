@@ -10,6 +10,20 @@
     <script type="text/javascript" src="js/example.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
     <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+    <style type="text/css">
+      #example {
+          width: 80px;
+          height: 80px;
+          position:relative;
+          left:100px;
+          top:100px;
+          border: 1px solid black;
+          cursor: pointer;
+          border-radius: 10px;
+          text-algin: center;
+          background-color: lightpink;
+      }
+    </style>
   </head>
 <body>
   <div class="container">
@@ -22,7 +36,13 @@
    </nav>
    <div class="row">
     <div class="col-xs-10 col-md-10">
-      <span class="alert alert-success" id="example">example   example   example</span>
+      <div id="container" style="height:380px;border:1px solid black;background-color:lightgreen">
+        <div class="alert alert-success" id="example">example drag</div>
+      </div>
+        <div class="animation">
+          <button type="button" class="btn btn-primary btn-xs" animation="am1">アニメーション-1</button>
+          <button type="button" class="btn btn-primary btn-xs" animation="am2">アニメーション-2</button>
+        </div>
     </div>
 
     <div class="col-xs-2 col-md-2">
