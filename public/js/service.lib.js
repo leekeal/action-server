@@ -29,20 +29,28 @@ service.prototype.actionEvent = function(){
 }
 service.prototype.onlineEvent = function(){
 	this.socket.on('online',function(data){
-		if(typeof(listenOnlineEvent) == 'function'){
-			listenOnlineEvent(data.users,data.user);
+		if(typeof(onlineEventHandler) == 'function'){
+			onlineEventHandler(data.users,data.user);
 		}
 	});
 }
 service.prototype.offlineEvent = function(){
 	this.socket.on('offline',function(data){
-		if (typeof(listenOfflineEvent) == 'function') {
-			listenOfflineEvent(data.users,data.user);
+		if (typeof(offlineEventHandler) == 'function') {
+			offlineEventHandler(data.users,data.user);
 		};
 	});
 }
 
 service.prototype.putAction = function(type,data){
+	this.socket.emit('action',{type:type,data:data});
+}
+
+service.prototype.autoAction = function(type,data){
+	fn = window[self.actionHandlers[type]];
+	if (typeof(fn) == 'function') {
+		fn(data);
+	};
 	this.socket.emit('action',{type:type,data:data});
 }
 
