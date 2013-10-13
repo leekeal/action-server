@@ -88,7 +88,7 @@ function listenOnlineEvent(users,user){
 		}
 	}
 	else{
-		$("#userList").append('<li class="list-group-item user" id = "'+user+'">'+user+'</li>');
+		$("#userList").append('<li class="list-group-item user" id = "'+user+'"><span class="glyphicon glyphicon-user"></span>'+user+'</li>');
 	}
 	console.log(user+'ログインした');
 }
