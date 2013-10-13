@@ -27,15 +27,17 @@
   </head>
 <body>
   <div class="container">
-    <nav class="navbar navbar-default" role="navigation">
+    <nav class="navbar navbar-default " role="navigation">
        <a class="navbar-brand" href="#">EXAMPLE</a>
        <p class="navbar-text pull-right">
+          <span class="glyphicon glyphicon-user"></span>
           <span id="username"></span> 
           <button type="button" class="btn btn-default" id="logout">ログアウト</button>
        </p>
    </nav>
-   <div class="row">
-    <div class="col-xs-10 col-md-10">
+   <div class="row"> 
+
+    <div class="col-xs-9 col-md-9">
       <div id="container" style="height:380px;border:1px solid black;background-color:lightgreen">
         <div class="alert alert-success" id="example">example drag</div>
       </div>
@@ -45,11 +47,19 @@
         </div>
     </div>
 
-    <div class="col-xs-2 col-md-2">
-      <h5>ユーザー一覧</h5>
-      <ul class="list-group" id="userList"></ul>
-    </div>
-   </div>
- </div>
+    <div class=" col-xs-3 col-md-3">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h6>ユーザー一覧</h6>
+        </div>
+        <div class="panel-body">
+          <ul class="list-group" id="userList"></ul>
+        </div>
+      </div>
+    </div><!-- div.rightPanel -->
+
+   </div><!-- div.row -->
+
+ </div><!-- div.container -->
 </body>
 </html>
