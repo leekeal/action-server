@@ -84,7 +84,7 @@ function listenOnlineEvent(users,user){
 	if ($.cookie('user') == user) {
 		$("#username").text(user);
 		for(user in users){
-			$("#userList").append('<li class="list-group-item user" id = "'+user+'">'+user+'</li>');
+			$("#userList").append('<li class="list-group-item user" id = "'+user+'"><span class="glyphicon glyphicon-user"></span>'+user+'</li>');
 		}
 	}
 	else{
