@@ -2,9 +2,9 @@
 
 
 function dragHandler(data,from){
-    $(".user#"+from+' span.glyphicon').animate({color:'red',opacity:'1'},0.01);
+    // $(".user#"+from+' span.glyphicon').animate({color:'red',opacity:'1'},0.01);
 	$("#example").css("top",data.top).css("left",data.left);
-    $(".user#"+from+' span.glyphicon').animate({color:'black',opacity:'1'},0.01);
+    // $(".user#"+from+' span.glyphicon').animate({color:'black',opacity:'1'},0.01);
 
 
 }
@@ -32,6 +32,11 @@ function onlineEventHandler(users,user,self){
 function offlineEventHandler(users,user){
     $(".user#"+user).remove();
     console.log(user+'⬇⬇⬇オフラインした');
+}
+
+function markActiveUserHandler(data){
+    $(".user#"+data.from).animate({color:'red',opacity:'1'},1300);
+    $(".user#"+data.from).animate({color:'black',opacity:'1'},700);
 }
 
 

@@ -70,3 +70,10 @@ _________________________________________________________________________
 
 
 	クロス ドメイン (Cross-Domain) の問題を理解する
+
+3.動作しているユーザーを示す。平均２秒一回この関数を呼び出される。
+	
+	function markActiveUserHandler(data){
+    	$(".user#"+data.from).animate({color:'red',opacity:'1'},1300);
+    	$(".user#"+data.from).animate({color:'black',opacity:'1'},700);
+	}

@@ -12,6 +12,8 @@ function service(){
 	self = this;
 	this.socket = io.connect();
 	this.test = 1;
+	this.markActiveUsersLock = {};
+	this.debug = false;
 
 	//実行関数	
 	this.actionEvent();
@@ -21,9 +23,12 @@ function service(){
 
 service.prototype.actionEvent = function(){
 	this.socket.on('action',function(data){
-		console.group(data.from+' ➡➡➡ '+data.type + ': '+self.actionHandlers[data.type]+'()');
-		console.debug(data.data);
-		console.groupEnd();
+		if (self.debug) {
+			console.group(data.from+' ➡➡➡ '+data.type + ': '+self.actionHandlers[data.type]+'()');
+			console.debug(data.data);
+			console.groupEnd();
+		};
+
 		if (!self.actionHandlers[data.type]) {
 			console.error('service.actionHandlersに'+data.type+'を処理する関数を指定していません!!!');
 		}
@@ -31,6 +36,7 @@ service.prototype.actionEvent = function(){
 			fn = window[self.actionHandlers[data.type]];
 			if (typeof(fn) == 'function') {
 				fn(data.data,data.from);
+				self.markActiveUser(data);
 			}else{
 				console.error(self.actionHandlers[data.type]+'を定義していません!!!');
 			}
@@ -81,6 +87,14 @@ service.prototype.time = function(){
     var time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? ('0' + date.getMinutes()) : date.getMinutes()) + ":" + (date.getSeconds() < 10 ? ('0' + date.getSeconds()) : date.getSeconds());
     return time;
 }
-service.prototype.debugOff = function(){
-	console.debug = function(){};
+
+service.prototype.markActiveUser = function(data){
+	now = new Date().getTime();
+	if (!self.markActiveUsersLock[data.from] || (now - self.markActiveUsersLock[data.from] >2000)) {
+		if (typeof(markActiveUserHandler) == 'function') {
+			markActiveUserHandler(data);
+		};
+		self.markActiveUsersLock[data.from] = now;
+
+	}
 }
