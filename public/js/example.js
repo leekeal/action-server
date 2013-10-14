@@ -36,10 +36,7 @@ $(document).ready(function(){
 
 
 	/*
-	service.putAction('so','hello world');
-	service.putAction('im','my image');
-	service.putAction('bg','green');
-	service.putAction('size','100');
+	service.putAction('color','hello world');
 	animationHandler('am1');service.putAction('am','am1');
 	animationHandler('am2');service.putAction('am','am2');
 	*/

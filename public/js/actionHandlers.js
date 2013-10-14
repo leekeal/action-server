@@ -1,18 +1,22 @@
 /****  Event Handlers  ***/
 
 
-function dragHandler(data){
+function dragHandler(data,from){
+    $(".user#"+from+' span.glyphicon').animate({color:'red',opacity:'1'},0.01);
 	$("#example").css("top",data.top).css("left",data.left);
+    $(".user#"+from+' span.glyphicon').animate({color:'black',opacity:'1'},0.01);
+
+
 }
 
-function changeColorHandler(data){
-	$("#example").css("background-color",data);
+function changeColorHandler(color){
+	$("#example").css("background-color",color);
 }
 
 
 //オンラインイベントを処理する
-function onlineEventHandler(users,user){
-    if ($.cookie('user') == user) {
+function onlineEventHandler(users,user,self){
+    if (self) {
         $("#username").text(user);
         for(user in users){
             $("#userList").append('<li class="list-group-item user" id = "'+user+'"><span class="glyphicon glyphicon-user"></span>'+user+'</li>');
@@ -21,13 +25,13 @@ function onlineEventHandler(users,user){
     else{
         $("#userList").append('<li class="list-group-item user" id = "'+user+'"><span class="glyphicon glyphicon-user"></span>'+user+'</li>');
     }
-    console.log(user+'オンラインした');
+    console.log(user+'⬆⬆⬆オンラインした');
 }
 
 //オフラインイベントを処理する
 function offlineEventHandler(users,user){
     $(".user#"+user).remove();
-    console.log(user+'オフラインした');
+    console.log(user+'⬇⬇⬇オフラインした');
 }
 
 

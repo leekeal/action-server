@@ -46,8 +46,8 @@ if ('development' == app.get('env')) {
 controller = new Controller(sessionStore);
 //路由
 app.get('/', controller.index);
-app.get('/signin', controller.get_signin);
-app.post('/signin', controller.post_signin);
+app.get('/login', controller.get_signin);
+app.post('/login', controller.post_signin);
 app.get('/logout', controller.get_logout);
 
 //Http サーバを起動		

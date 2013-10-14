@@ -21,16 +21,30 @@ function service(){
 
 service.prototype.actionEvent = function(){
 	this.socket.on('action',function(data){
-		fn = window[self.actionHandlers[data.type]];
-		if (typeof(fn) == 'function') {
-			fn(data.data);
-		};
+		console.group(data.from+' ➡➡➡ '+data.type + ': '+self.actionHandlers[data.type]+'()');
+		console.debug(data.data);
+		console.groupEnd();
+		if (!self.actionHandlers[data.type]) {
+			console.error('service.actionHandlersに'+data.type+'を処理する関数を指定していません!!!');
+		}
+		else{
+			fn = window[self.actionHandlers[data.type]];
+			if (typeof(fn) == 'function') {
+				fn(data.data,data.from);
+			}else{
+				console.error(self.actionHandlers[data.type]+'を定義していません!!!');
+			}
+
+		}
 	});
 }
 service.prototype.onlineEvent = function(){
 	this.socket.on('online',function(data){
 		if(typeof(onlineEventHandler) == 'function'){
-			onlineEventHandler(data.users,data.user);
+			if (data.self) {
+				self.user = data.user;
+			};
+			onlineEventHandler(data.users,data.user,data.self);
 		}
 	});
 }
@@ -66,4 +80,7 @@ service.prototype.time = function(){
 	var date = new Date();
     var time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? ('0' + date.getMinutes()) : date.getMinutes()) + ":" + (date.getSeconds() < 10 ? ('0' + date.getSeconds()) : date.getSeconds());
     return time;
+}
+service.prototype.debugOff = function(){
+	console.debug = function(){};
 }

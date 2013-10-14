@@ -13,6 +13,13 @@ action-server
 			};
 		
 		2:  service.actionHandlers['color'] = 'changeColorHandler';
+	
+	この表から、対応する関数を呼び出す。
+	例：
+		
+		function changeColorHander(data,from){
+			$("#example").css("background-color",color);
+		};
 
 ________________________________________________________________________
 ログイン
@@ -44,7 +51,12 @@ _________________________________________________________________________
 -------------
 1.新しいユーザーがオンラインした場合、この関数をよびだされる。
 
-	function onlineEventHandler(users,user){
+	function onlineEventHandler(users,user,self){
+		users:全てのオンラインユーザー
+		user:新しいオンラインしたユーザー名前
+		self:自分かを判断する変数
+				true:  自分です。
+				false:自分じゃない
 		//プログラム
 		console.log(user+'オンライン');
 	};
