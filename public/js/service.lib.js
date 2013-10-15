@@ -11,7 +11,6 @@ service.putAction(type,data);
 function service(){
 	self = this;
 	this.socket = io.connect();
-	this.test = 1;
 	this.markActiveUsersLock = {};
 	this.debug = false;
 
@@ -75,9 +74,8 @@ service.prototype.autoAction = function(type,data){
 }
 
 service.prototype.logout = function(){
-	console.log('???');
 	$.get("/logout", function(data){
-		console.log('I logout!');
+		console.log('I logout!⬇⬇⬇');
 		location.reload();
 	});
 }

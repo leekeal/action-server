@@ -9,6 +9,18 @@ function dragHandler(data,from){
 
 }
 
+function animationHandler(data,form){
+    start = function (){
+        var div=$("#example");
+        div.animate({top:data.top,left:data.left,opacity:'0.8'},500);
+    }
+    stop = function (){
+        service.animationSwitch = 'stop';
+    }
+    window[data['switch']]();
+}
+
+
 function changeColorHandler(color){
 	$("#example").css("background-color",color);
 }
@@ -35,39 +47,8 @@ function offlineEventHandler(users,user){
 }
 
 function markActiveUserHandler(data){
-    $(".user#"+data.from).animate({color:'red',opacity:'1'},1300);
-    $(".user#"+data.from).animate({color:'black',opacity:'1'},700);
+    $(".user#"+data.from).animate({color:'red',opacity:'1'},700);
+    $(".user#"+data.from).animate({color:'red',opacity:'1'},700);
+    $(".user#"+data.from).animate({color:'black',opacity:'1'},600);
 }
 
-
-
-//アニメーションを実行関数
-function animationHandler(data){
-    am1 = function(){
-        var div=$("#example");
-    div.animate({height:'300px',opacity:'0.4'},"slow");
-    div.animate({width:'300px',opacity:'0.8'},"slow");
-    div.animate({height:'100px',opacity:'0.4'},"slow");
-    div.animate({width:'100px',opacity:'0.8'},"slow");
-    div.animate({height:'80px',opacity:'0.4'},"slow");
-    div.animate({width:'80px',opacity:'0.8'},"slow");
-    div.animate({height:'300px',opacity:'0.4'},"slow");
-    div.animate({width:'300px',opacity:'0.8'},"slow");
-    div.animate({height:'80px',opacity:'0.4'},"slow");
-    div.animate({width:'80px',opacity:'0.8'},"slow");
-    }
-    am2 = function(){
-        var div=$("#example");
-        div.animate({left:'10px',opacity:'0.8'},"slow");
-        div.animate({left:'300px',opacity:'0.8'},"slow");
-        div.animate({top:'300px',opacity:'0.8'},"slow");
-        div.animate({left:'150px',opacity:'0.8'},"slow");
-        div.animate({top:'10px',opacity:'0.8'},"slow");
-        div.animate({top:'300px',opacity:'0.8'},2000);
-        div.animate({left:'200px',opacity:'0.8'},"slow");
-        div.animate({left:'100px',opacity:'0.8'},"slow");
-        div.animate({top:'10px',opacity:'0.8'},"slow");
-        div.animate({left:'10px',opacity:'0.8'},"slow");
-    }
-    window[data]();
-}
