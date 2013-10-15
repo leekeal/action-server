@@ -13,6 +13,7 @@ function service(){
 	this.socket = io.connect();
 	this.markActiveUsersLock = {};
 	this.debug = false;
+	this.user = null;
 
 	//実行関数	
 	this.actionEvent();
@@ -35,7 +36,8 @@ service.prototype.actionEvent = function(){
 			fn = window[self.actionHandlers[data.type]];
 			if (typeof(fn) == 'function') {
 				fn(data.data,data.from);
-				self.markActiveUser(data);
+				//mark active user
+				self.markActiveUser(data); 
 			}else{
 				console.error(self.actionHandlers[data.type]+'を定義していません!!!');
 			}
@@ -63,6 +65,8 @@ service.prototype.offlineEvent = function(){
 
 service.prototype.putAction = function(type,data){
 	this.socket.emit('action',{type:type,data:data});
+	//mark active user
+	self.markActiveUser({from:self.user}); 
 }
 
 service.prototype.autoAction = function(type,data){
@@ -71,6 +75,8 @@ service.prototype.autoAction = function(type,data){
 		fn(data);
 	};
 	this.socket.emit('action',{type:type,data:data});
+	//mark active user
+	self.markActiveUser({from:self.user}); 
 }
 
 service.prototype.logout = function(){
