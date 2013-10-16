@@ -47,7 +47,6 @@ actionService = function(io,sessionStore){
 				sessionStore.users[user] = user;
 			}
 			//自分を含めて、全員に今ログインしたユーザーの名前を放送する
-			console.log(session);
 			// self.io.sockets.emit('online',{users:sessionStore.users,user:user});
 			socket.emit('online',{users:sessionStore.users,user:user,self:true});
 			socket.broadcast.emit('online', {users:sessionStore.users,user:user,self:false});
