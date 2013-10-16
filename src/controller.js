@@ -19,8 +19,8 @@ module.exports = function(sessionStore){
     //登录处理
     this.post_signin = function(req,res){
 
-        if (req.body.name&&!sessionStore.users[req.body.name]) {
-            req.session.user = req.body.name;
+        if (req.body.username&&!sessionStore.users[req.body.username]) {
+            req.session.user = req.body.username;
             //socket 通知上线判断是不是自己需要用到
             // res.cookie("user", req.body.name, {maxAge: 1000*60*60*24*30});
             res.redirect('/');

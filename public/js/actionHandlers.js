@@ -47,8 +47,14 @@ function offlineEventHandler(users,user){
 }
 
 function markActiveUserHandler(data){
-    $(".user#"+data.from).animate({color:'red',opacity:'1'},700);
-    $(".user#"+data.from).animate({color:'red',opacity:'1'},700);
-    $(".user#"+data.from).animate({color:'black',opacity:'1'},600);
+    var userElement = $(".user#"+data.from+' .glyphicon');
+    userElement.animate({color:'red',opacity:'1'},200);
+    userElement.animate({color:'black',opacity:'1'},200);
+    userElement.animate({color:'red',opacity:'1'},200);
+    userElement.animate({color:'black',opacity:'1'},200);
+    userElement.animate({color:'red',opacity:'1'},200);
+    userElement.animate({color:'black',opacity:'1'},200);
+    userElement.animate({color:'red',opacity:'1'},200);
+    userElement.animate({color:'black',opacity:'1'},200);
 }
 
