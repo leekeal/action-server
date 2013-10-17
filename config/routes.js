@@ -1,7 +1,6 @@
-var Controller = require('../app/controllers/controller');
+var controller = require('../app/controllers/controller');
 var test = require('../app/controllers/test');
 module.exports = function (app,sessionStore) {
-controller = new Controller(sessionStore);
 
 	//路由
 app.get('/', controller.index);

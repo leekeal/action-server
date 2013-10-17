@@ -25,11 +25,9 @@ require('./config/express')(app, config,sessionStore);
 // Bootstrap routes
 require('./config/routes')(app,sessionStore);
 
-//Http サーバを起動                
-HttpServer = http.createServer(app).listen(app.get('port'), function(){
-  console.log('------>Action-Server listening on port ' + app.get('port'));
-});
 
+HttpServer = app.listen(app.get('port'));
+console.log('------>Action-Server listening on port ' + app.get('port'));
 //socket　サーバを起動
 io = io.listen(HttpServer);
 
