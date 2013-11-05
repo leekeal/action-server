@@ -19,6 +19,7 @@ function service(){
 	this.actionEvent();
 	this.onlineEvent();
 	this.offlineEvent();
+	this.recordEventListent();
 }
 
 service.prototype.actionEvent = function(){
@@ -83,6 +84,15 @@ service.prototype.logout = function(){
 	$.get("/logout", function(data){
 		console.log('I logout!⬇⬇⬇');
 		location.reload();
+	});
+}
+service.prototype.record = function(action,name){
+	this.socket.emit('record',{'action':action,'name':name});
+}
+service.prototype.recordEventListent = function(){
+	this.socket.on('record',function(data){
+		console.log(data);
+		recordRemoteEventHandler(data);
 	});
 }
 

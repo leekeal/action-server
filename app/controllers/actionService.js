@@ -2,7 +2,7 @@ actionService = function(io,sessionStore){
 	self = this;
 	//this前缀的 == public
 	this.io = io;
-
+	this.record = null;
 
 	this.start = function(){
 		//sessionを確認する
@@ -50,8 +50,11 @@ actionService = function(io,sessionStore){
 			// self.io.sockets.emit('online',{users:sessionStore.users,user:user});
 			socket.emit('online',{users:sessionStore.users,user:user,self:true});
 			socket.broadcast.emit('online', {users:sessionStore.users,user:user,self:false});
+			//ログインする時、recordを行っているのかを判断する。
+			recordLoginHandler(socket);
 
 			action(socket);
+			recordEventListen(socket);
 			disconnect(socket);
 		});
 	}
@@ -60,7 +63,33 @@ actionService = function(io,sessionStore){
 		socket.on('action',function(data){
 			data.from = socket.name;
 			socket.broadcast.emit('action', data);
+			writeRecord();
 		});
+	}
+	recordEventListen = function(socket){
+		socket.on('record',function(data){
+			if (data.action == 'start') {
+				self.record = data;
+				self.record.action = 'recordding';
+				self.record.startTime = new Date().getTime();
+				self.record.user = socket.name;
+				//write record message to other users 
+				socket.broadcast.emit('record',self.record);
+			}
+			else if (data.action == 'stop') {
+				socket.broadcast.emit('record',{'action':'stop'});
+				delete self.record;
+			};
+		});
+	}
+	recordLoginHandler = function(socket){
+		if (self.record != undefined) {
+			socket.emit('record',self.record);
+		}
+
+	}
+	writeRecord = function(){
+		console.log('記録しました');
 	}
 	//オフライン　イベントを処理
 	disconnect = function(socket){

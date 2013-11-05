@@ -12,7 +12,7 @@ var env = process.env.NODE_ENV || 'development'
 
 var mongoose = require('mongoose');
 // Bootstrap db connection
-mongoose.connect(config.mongodb);
+// mongoose.connect(config.mongodb);
 // Bootstrap models
 var models_path = __dirname + '/app/models'
 fs.readdirSync(models_path).forEach(function (file) {

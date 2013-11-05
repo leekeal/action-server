@@ -1,12 +1,13 @@
 //htmlを読み込む完了から　含んているプログラムを実行
 $(document).ready(function(){
 	//action交換サービスをスタートする
-	service = new service();
+	window.service = new service();
 	//この表でputactionからくれたデータを解析して、対応する関すを呼び出す
 	service.actionHandlers = {
 		color:'changeColorHandler',
 		am:'animationHandler',
 		drag:'dragHandler',
+		xyz:'xyzHandler',
 	};
 
 

@@ -12,7 +12,9 @@
     <script type="text/javascript" src="js/example.js"></script>
     <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
     <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
+    <script type="text/javascript" src="js/start.js"></script>
     <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+
     <style type="text/css">
       #example {
           width: 80px;
@@ -62,6 +64,15 @@
     </div><!-- div.rightPanel -->
 
    </div><!-- div.row -->
+   <div id="responseWS"></div><br />
+
+   <div id="record">
+    <form role="form" onsubmit="return recordLocalEventHandler(event,'start')">
+      <label for="log-name">記録のname</label>
+      <input type="text" name="log-name" value="">
+      <button type="submit" class="btn btn-default">記録Start</button>
+    </form>
+   </div>
 
  </div><!-- div.container -->
 </body>
