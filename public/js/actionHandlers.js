@@ -99,6 +99,21 @@ function recordRemoteEventHandler(data){
         $("#record button").html('記録Start').removeClass('btn-info');
         $("#record button").removeAttr('disabled');
         $("#record input").removeAttr('readonly').val('');
+    }
+    else if (data.action == 'list') {
+        var dom = '';
+        data.list.forEach(function(recordName){
+            dom += '<option value="' +recordName+'">'+recordName+' <span class="glyphicon glyphicon-play"></span></option>' 
+        });
+        $("#recordList").html(dom);
+    }
+    else if(data.action == 'read'){
+        console.log(data.record);
     };
+}
+
+function readRecord(){
+    var recordName = $("#recordList").val();
+    service.record('read',recordName);
 }
 

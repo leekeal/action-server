@@ -1,3 +1,4 @@
+var fs = require('fs');
 actionService = function(io,sessionStore){
 	self = this;
 	//this前缀的 == public
@@ -52,6 +53,8 @@ actionService = function(io,sessionStore){
 			socket.broadcast.emit('online', {users:sessionStore.users,user:user,self:false});
 			//ログインする時、recordを行っているのかを判断する。
 			recordLoginHandler(socket);
+			//put record list
+			putRecordList(socket);
 
 			action(socket);
 			recordEventListen(socket);
@@ -63,7 +66,7 @@ actionService = function(io,sessionStore){
 		socket.on('action',function(data){
 			data.from = socket.name;
 			socket.broadcast.emit('action', data);
-			writeRecord();
+			writeRecord(data);
 		});
 	}
 	recordEventListen = function(socket){
@@ -75,10 +78,26 @@ actionService = function(io,sessionStore){
 				self.record.user = socket.name;
 				//write record message to other users 
 				socket.broadcast.emit('record',self.record);
+				console.log(self.record);
+
+				var recordInfo = {'name':self.record.name,'user':self.record.user,'time':getTime()};
+				recordInfo = JSON.stringify(recordInfo);
+				fs.appendFile('record/'+self.record.name+'.log',recordInfo+"\n", function (err) {
+					if (err) throw err;
+					console.log('The "data to append" was appended to file!'); 
+				});
 			}
 			else if (data.action == 'stop') {
 				socket.broadcast.emit('record',{'action':'stop'});
+				putRecordList(socket,'all');
 				delete self.record;
+			}
+			//record json dataを返す
+			else if (data.action == 'read') {
+				readRecord(socket,data.name);
+			}
+			else if (data.action == 'list') {
+
 			};
 		});
 	}
@@ -88,8 +107,47 @@ actionService = function(io,sessionStore){
 		}
 
 	}
-	writeRecord = function(){
-		console.log('記録しました');
+	writeRecord = function(data){
+		if (self.record != undefined && self.record.action == 'recordding') {
+			data.runTime = new Date().getTime();
+			data = JSON.stringify(data);
+			fs.appendFile('record/'+self.record.name+'.log',data+"\n", function (err) {
+				if (err) throw err;
+				console.log('The "data to append" was appended to file!'); 
+			});
+		};
+	}
+	putRecordList = function(socket,to){
+		fs.readdir('./record/',function(err,list){
+			if (err) throw err;
+			var data = {'action':'list','list':list}
+			if (to == 'all') {
+				self.io.sockets.emit('record',data);
+			}
+			else{
+				socket.emit('record',data);
+			};
+		});
+	}
+	readRecord = function(socket,name){
+		console.log(name);
+		fs.readFile('./record/'+name,{encoding:'utf8'},function(err,data){
+			if (err) throw err;
+			data = data.split('\n');
+			var result = {info:null,record:new Array()};
+			console.log(data.length);
+			for (var i = 0; i < data.length-1; i++) {
+				if (i==0) {
+					result.info = JSON.parse(data[i]);
+				}
+				else{
+					result.record.push(JSON.parse(data[i]))
+				}
+			};
+			result.action = 'read';
+			//put record data to browser
+			socket.emit('record',result);
+		});
 	}
 	//オフライン　イベントを処理
 	disconnect = function(socket){
@@ -103,6 +161,12 @@ actionService = function(io,sessionStore){
 				socket.broadcast.emit('offline', {users: sessionStore.users, user: socket.name});
 			}
 		});
+	}
+
+	getTime = function(){
+		var date = new Date();
+		var time = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate() + ' ' + date.getHours() + ':' + (date.getMinutes() < 10 ? ('0' + date.getMinutes()) : date.getMinutes()) + ":" + (date.getSeconds() < 10 ? ('0' + date.getSeconds()) : date.getSeconds());
+		return time;
 	}
 
 

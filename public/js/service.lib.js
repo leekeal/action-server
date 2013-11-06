@@ -91,7 +91,6 @@ service.prototype.record = function(action,name){
 }
 service.prototype.recordEventListent = function(){
 	this.socket.on('record',function(data){
-		console.log(data);
 		recordRemoteEventHandler(data);
 	});
 }
