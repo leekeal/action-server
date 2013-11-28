@@ -46,6 +46,26 @@ service.prototype.actionEvent = function(){
 		}
 	});
 }
+
+service.prototype.runAction = function(data){
+	if (!self.actionHandlers[data.type]) {
+		console.error('service.actionHandlersに'+data.type+'を処理する関数を指定していません!!!');
+	}
+	else{
+		fn = window[self.actionHandlers[data.type]];
+		if (typeof(fn) == 'function') {
+			fn(data.data,data.from);
+				//mark active user
+				self.markActiveUser(data); 
+			}
+			else{
+				console.error(self.actionHandlers[data.type]+'を定義していません!!!');
+			}
+
+	}
+
+}
+
 service.prototype.onlineEvent = function(){
 	this.socket.on('online',function(data){
 		if(typeof(onlineEventHandler) == 'function'){
@@ -111,3 +131,65 @@ service.prototype.markActiveUser = function(data){
 
 	}
 }
+
+
+//記録local処理
+function recordLocalEventHandler(event,eventName){
+    $e = $(event.target);
+    if (eventName == 'start') {
+        $e.attr('onsubmit',"return recordLocalEventHandler(event,'stop')");
+        $e.children('button').html('記録Stop').addClass('btn-success');
+        $e.children('input').attr('readonly','readonly');
+        service.record('start',$e.children("input").val());
+    }
+    else if (eventName == 'stop') {
+        $e.attr('onsubmit',"return recordLocalEventHandler(event,'start')");
+        $e.children('button').html('記録Start').removeClass('btn-success');
+        $e.children('input').removeAttr('readonly').val('');
+
+        service.record('stop',null);
+    }
+    return false;
+}
+//記録remote処理
+function recordRemoteEventHandler(data){
+    if (data.action == 'recordding') {
+        if (data.user == service.user) {
+         $("#record form").attr('onsubmit',"return recordLocalEventHandler(event,'stop')");
+         $("#record button").html('記録Stop').addClass('btn-success');
+         $("#record input").val(data.name).attr('readonly','readonly');
+        }
+        else{
+           $("#record button").html('記録中').addClass('btn-info').attr('disabled','disabled');
+           $("#record input").val(data.name).attr('readonly','readonly');
+        }
+    }
+    else if (data.action == 'stop') {
+        $("#record button").html('記録Start').removeClass('btn-info');
+        $("#record button").removeAttr('disabled');
+        $("#record input").removeAttr('readonly').val('');
+    }
+    else if (data.action == 'list') {
+        var dom = '';
+        data.list.forEach(function(recordName){
+            dom += '<option value="' +recordName+'">'+recordName+' <span class="glyphicon glyphicon-play"></span></option>' 
+        });
+        $("#recordList").html(dom);
+    }
+    else if(data.action == 'read'){
+
+    	var worker = new Worker('js/record-worker.js');
+    	worker.postMessage(data);
+    	
+    	worker.addEventListener('message', function(e) {
+        	service.runAction(e.data);//actionを実行
+		}, false);
+    };
+
+}
+
+function readRecord(){
+    var recordName = $("#recordList").val();
+    service.record('read',recordName);
+}
+
