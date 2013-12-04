@@ -8,12 +8,15 @@
      <script type="text/javascript" src="js/bootstrap.js"></script>
     <script type="text/javascript" src="js/jquery.cookie.js"></script>
     <script src="/socket.io/socket.io.js"></script>
+
     <script type="text/javascript" src="js/service.lib.js"></script>
     <script type="text/javascript" src="js/actionHandlers.js"></script>
     <script type="text/javascript" src="js/example.js"></script>
+    <script type="text/javascript" src="js/recordHandler.js"></script>
+    <script type="text/javascript" src="js/start.js"></script>
+
     <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
     <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
-    <script type="text/javascript" src="js/start.js"></script>
     
     <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
 
@@ -68,18 +71,18 @@
    </div><!-- div.row -->
    <div id="responseWS"></div><br />
 
-   <div id="record" style="width:350px;">
+   <!--- =============Record widget start-->
+   <div id="record" style="width:370px;">
     <form role="form" onsubmit="return recordLocalEventHandler(event,'start')">
       <label for="log-name">記録のname</label>
       <input type="text" name="log-name" value="">
       <button type="submit" class="btn btn-default">記録Start</button>
     </form>
 
-    <select multiple class="form-control" id="recordList">
-    </select>
-    <button id="readRecord" type="submit" class="btn btn-default" onclick="readRecord()">Start</button>
+    <ul class="list-group" id="recordList"></ul>
+   <!--  <button id="readRecord" type="submit" class="btn btn-default" onclick="readRecord()">Start</button> -->
    </div>
-
+   <!--- ==============Record widget stop-->
 
  </div><!-- div.container -->
 </body>

@@ -5,19 +5,19 @@ self.addEventListener('message', function(e) {
 
 	for (i in data.record){
 		if (i == 0) {
-			// console.log(i);
 			self.postMessage(data.record[i]);
 		}
 		else{
 			while(1){
 				nowTime = new Date().getTime();
 				if (nowTime - startTime >= data.record[i].runTime - firstActionTime) {
-		        		// console.log(i);//actionのidを表示する。
 		        		self.postMessage(data.record[i]);
 		        		break;
 		        }
 		    }
 		}
 	}
+
+	self.postMessage('end');
 
 }, false);
