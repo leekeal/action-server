@@ -1,63 +1,183 @@
-﻿<!doctype html>
-<html>
-  <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta charset="utf-8">
-    <title>action service</title>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-     <script type="text/javascript" src="js/bootstrap.js"></script>
-    <script type="text/javascript" src="js/jquery.cookie.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
+﻿<html>
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta charset="utf-8">
+  <title>action service</title>
+  <!-- js lib -->
+  <script type="text/javascript" src="lib/jquery.min.js"></script>
+  <script type="text/javascript" src="lib/bootstrap.js"></script>
+  <script type="text/javascript" src="lib/jquery.cookie.js"></script>
+  <script type="text/javascript" src="lib/jquery-ui-1.9.2.custom.min.js"></script>
+  <script type="text/javascript" src="lib/jquery.ui.touch-punch.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
 
-    <script type="text/javascript" src="js/service.lib.js"></script>
-    <script type="text/javascript" src="js/actionHandlers.js"></script>
-    <script type="text/javascript" src="js/example.js"></script>
-    <script type="text/javascript" src="js/recordHandler.js"></script>
-    <script type="text/javascript" src="js/start.js"></script>
+  <!-- self js -->
+  <script type="text/javascript" src="js/service.lib.js"></script>
+  <script type="text/javascript" src="js/actionHandlers.js"></script>
+  <script type="text/javascript" src="js/start.js"></script>
+  <script type="text/javascript" src="js/wiiHandler.js"></script>
+  <script type="text/javascript" src="js/recordHandler.js"></script>
 
-    <script type="text/javascript" src="js/jquery-ui-1.9.2.custom.min.js"></script>
-    <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script>
-    
-    <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
+  <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
 
-    <style type="text/css">
-      #example {
-          width: 80px;
-          height: 80px;
-          position:relative;
-          left:100px;
-          top:100px;
-          border: 1px solid black;
-          cursor: pointer;
-          border-radius: 10px;
-          text-algin: center;
-          background-color: lightpink;
-      }
-    </style>
-  </head>
+  <style>
+    #sortable { list-style-type: none; margin: 20; padding: 0; width:890px;}
+    #sortable li {float: left;}
+    #sortable img { list-style-type: none;height:100px; width:100px; margin:0;}
+  </style>
+</head>
 <body>
   <div class="container">
     <nav class="navbar navbar-default " role="navigation">
-       <a class="navbar-brand" href="#">EXAMPLE</a>
-       <p class="navbar-text pull-right">
-          <span class="glyphicon glyphicon-user"></span>
-          <span id="username"></span> 
-          <button type="button" class="btn btn-default" id="logout">ログアウト</button>
-       </p>
-   </nav>
-   <div class="row"> 
+     <a class="navbar-brand" href="#">絵物語を伴った自然音による合奏システム</a>
+     <p class="navbar-text pull-right">
+      <span class="glyphicon glyphicon-user"></span>
+      <span id="username"></span> 
+      <button type="button" class="btn btn-default" id="logout">ログアウト</button>
+    </p>
+  </nav>
+  <div class="row"> 
 
-    <div class="col-xs-9 col-md-9">
-      <div id="container" style="height:380px;border:1px solid black;background-color:lightgreen">
-        <div class="alert-success" id="example">example drag</div>
+
+    <div class="col-md-6"> <!------------------left--------------- -->
+      <canvas id="canvas" width="450" height="300" style="border:1px solid #CCC;"></canvas>
+      <div> <!-- 図図図 -->
+        <ul id="sortable" >
+          <li id="1"> <img src="backimg/img/1.jpg "></li>
+          <li id="2"> <img src="backimg/img/2.jpg"> </li>
+          <li id="3"> <img src="backimg/img/3.jpg"> </li>
+          <li id="4"> <img src="backimg/img/4.jpg"> </li>
+          <li id="5"> <img src="backimg/img/5.jpg"> </li>
+          <li id="6"> <img src="backimg/img/6.jpg"> </li>
+          <li id="7"> <img src="backimg/img/7.jpg"> </li>
+          <li id="8"> <img src="backimg/img/8.jpg"> </li>
+          <li id="9"> <img src="backimg/img/9.jpg"> </li>
+          <li id="10">  <img src="backimg/img/10.jpg">  </li>
+          <li id="11">  <img src="backimg/img/11.jpg">  </li>
+          <li id="12">  <img src="backimg/img/12.jpg">  </li>
+          <li id="13">  <img src="backimg/img/13.jpg">  </li>
+          <li id="14">  <img src="backimg/img/14.jpg">  </li>
+          <li id="15">  <img src="backimg/img/15.jpg">  </li>
+          <li id="16">  <img src="backimg/img/16.jpg">  </li>
+          <li id="17">  <img src="backimg/img/17.jpg">  </li>
+          <li id="18">  <img src="backimg/img/18.jpg">  </li>
+          <li id="19">  <img src="backimg/img/19.jpg">  </li>
+          <li id="20">  <img src="backimg/img/20.jpg">  </li>
+          <li id="21">  <img src="backimg/img/21.jpg">  </li>
+          <li id="22">  <img src="backimg/img/22.jpg">  </li>
+          <li id="23">  <img src="backimg/img/23.jpg">  </li>
+          <li id="24">  <img src="backimg/img/24.jpg">  </li>
+          <li id="25">  <img src="backimg/img/25.jpg">  </li>
+          <li id="26">  <img src="backimg/img/26.jpg">  </li>
+          <li id="27">  <img src="backimg/img/27.jpg">  </li>
+          <li id="28">  <img src="backimg/img/28.jpg">  </li>
+          <li id="29">  <img src="backimg/img/29.jpg">  </li>
+          <li id="30">  <img src="backimg/img/30.jpg">  </li>
+          <li id="31">  <img src="backimg/img/31.jpg">  </li>
+          <li id="32">  <img src="backimg/img/32.jpg">  </li>
+          <li id="33">  <img src="backimg/img/33.jpg">  </li>
+          <li id="34">  <img src="backimg/img/34.jpg">  </li>
+          <li id="35">  <img src="backimg/img/35.jpg">  </li>
+          <li id="36">  <img src="backimg/img/36.jpg">  </li>
+          <li id="37">  <img src="backimg/img/37.jpg">  </li>
+          <li id="38">  <img src="backimg/img/38.jpg">  </li>
+          <li id="39">  <img src="backimg/img/39.jpg">  </li>
+          <li id="40">  <img src="backimg/img/40.jpg">  </li>
+          <li id="41">  <img src="backimg/img/41.jpg">  </li>
+          <li id="42">  <img src="backimg/img/42.jpg">  </li>
+          <li id="43">  <img src="backimg/img/43.jpg">  </li>
+          <li id="44">  <img src="backimg/img/44.jpg">  </li>
+          <li id="45">  <img src="backimg/img/45.jpg">  </li>
+          <li id="46">  <img src="backimg/img/46.jpg">  </li>
+          <li id="47">  <img src="backimg/img/47.jpg">  </li>
+          <li id="48">  <img src="backimg/img/48.jpg">  </li>
+          <li id="49">  <img src="backimg/img/49.jpg">  </li>
+          <li id="50">  <img src="backimg/img/50.jpg">  </li>
+          <li id="51">  <img src="backimg/img/51.jpg">  </li>
+          <li id="52">  <img src="backimg/img/52.jpg">  </li>
+          <li id="53">  <img src="backimg/img/53.jpg">  </li>
+          <li id="54">  <img src="backimg/img/54.jpg">  </li>
+          <li id="55">  <img src="backimg/img/55.jpg">  </li>
+          <li id="56">  <img src="backimg/img/56.jpg">  </li>
+        </ul>
+        <input type="button" id="submitSortable" value="この並び順を送信">
+      </div><!-- 図図図 -->
+    </div> <!-- ------------------------------left end-->
+
+    <div class="col-md-3"><!------------------  center --------------- -->
+      <div>
+        <button name="left" id="left" onClick="fallLeft()">左</button>
+        <button name="center" id="down" onClick="initImage()">中央</button>
+        <button name="center" id="yura" onClick="fallLeaves()">ゆら</button>
+        <button name="right" id="right" onClick="fallRight()">右</button>
+        <button name="up" id="up" onClick="up()">上</button>
+        <button name="upleave" onClick="upLeaves()">上ゆら</button>
+        <button name="stop" id="stop" onClick="stop()">停止</button><br />
+
+        <form method="get" action="" name="formname" id="formname">
+          <select name="selectname" id="selectname">
+            <option value="sample/uguisu">鶯</option>
+            <option value="sample/nature01/Wind_bell">風鈴</option>
+            <option value="sample/nature01/Cicada2">蝉</option>
+            <option value="E3">ミ</option>
+            <option value="sample/sound/frog">蛙</option>
+            <option value="sample/sound/thunder">雷</option>
+            <option value="sample/sound/wind">風</option>
+            <option value="sample/sound/suzumishi">鈴虫</option>
+
+          </select> 
+          <!--<input type="button" name="button1" id="button1" value="送信" onclick="ButtonClick(formname);">-->
+        </form>
+
+        <form method="get" action="" name="formname0" id="form0">
+          <select name="selectname0" id="select0">
+            <option value="sample/uguisu">鶯</option>
+            <option value="sample/nature01/Wind_bell">風鈴</option>
+            <option value="sample/nature01/Cicada2">蝉</option>
+            <option value="E3">ミ</option>
+            <option value="sample/sound/frog">蛙</option>
+            <option value="sample/sound/thunder">雷</option>
+            <option value="sample/sound/wind">風</option>
+            <option value="sample/sound/suzumishi">鈴虫</option>
+
+          </select> 
+          <!--<input type="button" name="button1" id="button1" value="送信" onclick="ButtonClick(formname);">-->
+        </form>
+        <form method="get" action="" name="formname2" id="form2">
+          <select name="selectname2" id="select2">
+            <option value="anime/001.png">椛</option>
+            <option value="anime/kira2.png">光</option>
+            <option value="anime/03.png">桜</option>
+            <option value="anime/img01.png">雪１</option>
+            <option value="anime/img005.png">雪２</option>
+            <option value="anime/img03.png">雪３</option>
+          </select> 
+          <input type="button" name="button2" id="button2" value="送信" onClick="ButtonClick2(formname2);">
+        </form>
+
+        <form method="get" action="" name="formname3" id="form3">
+          <select name="selectname3" id="select3">
+            <option value="1">1</option>
+            <option value="0.9">0.9</option>
+            <option value="0.8">0.8</option>
+            <option value="0.7">0.7</option>
+            <option value="0.6">0.6</option>
+            <option value="0.5">0.5</option>
+            <option value="0.4">0.4</option>
+            <option value="0.3">0.3</option>
+            <option value="0.2">0.2</option>
+          </select> 
+          <input type="button" name="button3" id="button3" value="送信" onClick="ButtonClick3(formname3);">
+        </form>
+
+
+        <!--<div style="text-align:left;">-->
+        <button name="back" onClick="back()">戻る</button>
+        <button name="next" id="next">次</button>
       </div>
-        <div class="animation">
-          <button type="button" class="btn btn-primary btn-xs" id="start">アニメーション-start</button>
-          <button type="button" class="btn btn-primary btn-xs" id="stop">アニメーション-stop</button>
-        </div>
-    </div>
+    </div><!------------------  center end--------------- -->
 
-    <div class=" col-xs-3 col-md-3">
+    <div class=" col-md-3"><!------------------  right --------------- -->
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h6>ユーザー一覧</h6>
@@ -66,24 +186,37 @@
           <ul class="list-group" id="userList"></ul>
         </div>
       </div>
-    </div><!-- div.rightPanel -->
 
-   </div><!-- div.row -->
-   <div id="responseWS"></div><br />
+      <!--- =============Record widget start-->
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h6>記録・再生</h6>
+        </div>
+        <div class="panel-body">
+          <div id="record" >
+            <form role="form" onsubmit="return recordLocalEventHandler(event,'start')">
+              <label for="log-name">記録名</label>
+              <input type="text" name="log-name" value="" style="width:60px;">
+              <button type="submit" class="btn btn-default">Start</button>
+            </form>
 
-   <!--- =============Record widget start-->
-   <div id="record" style="width:370px;">
-    <form role="form" onsubmit="return recordLocalEventHandler(event,'start')">
-      <label for="log-name">記録のname</label>
-      <input type="text" name="log-name" value="">
-      <button type="submit" class="btn btn-default">記録Start</button>
-    </form>
+            <ul class="list-group" id="recordList"></ul>
+          </div>
+        </div>
+      </div>
+      <!--- ==============Record widget stop-->
+    </div><!------------------  right end --------------- -->
 
-    <ul class="list-group" id="recordList"></ul>
-   <!--  <button id="readRecord" type="submit" class="btn btn-default" onclick="readRecord()">Start</button> -->
-   </div>
-   <!--- ==============Record widget stop-->
+  </div><!-- div.row -->
 
- </div><!-- div.container -->
+</div><!-- div.container -->
+
+<!-- 原始ソースコードの制限の原因でここに導入する　js    -->
+<script type="text/javascript" src="js/soundHandler.js"></script>
+<script type="text/javascript" src="js/canvasHandler.js"></script>
+
 </body>
+<script type="text/javascript">
+</script>
+
 </html>
