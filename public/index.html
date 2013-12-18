@@ -17,6 +17,7 @@
   <script type="text/javascript" src="js/start.js"></script>
   <script type="text/javascript" src="js/wiiHandler.js"></script>
   <script type="text/javascript" src="js/recordHandler.js"></script>
+  <script type="text/javascript" src="js/imagePool.js"></script>
 
   <link type="text/css" rel="stylesheet" href="css/bootstrap.css">
 
@@ -41,67 +42,7 @@
 
     <div class="col-md-6"> <!------------------left--------------- -->
       <canvas id="canvas" width="450" height="300" style="border:1px solid #CCC;"></canvas>
-      <div> <!-- 図図図 -->
-        <ul id="sortable" >
-          <li id="1"> <img src="backimg/img/1.jpg "></li>
-          <li id="2"> <img src="backimg/img/2.jpg"> </li>
-          <li id="3"> <img src="backimg/img/3.jpg"> </li>
-          <li id="4"> <img src="backimg/img/4.jpg"> </li>
-          <li id="5"> <img src="backimg/img/5.jpg"> </li>
-          <li id="6"> <img src="backimg/img/6.jpg"> </li>
-          <li id="7"> <img src="backimg/img/7.jpg"> </li>
-          <li id="8"> <img src="backimg/img/8.jpg"> </li>
-          <li id="9"> <img src="backimg/img/9.jpg"> </li>
-          <li id="10">  <img src="backimg/img/10.jpg">  </li>
-          <li id="11">  <img src="backimg/img/11.jpg">  </li>
-          <li id="12">  <img src="backimg/img/12.jpg">  </li>
-          <li id="13">  <img src="backimg/img/13.jpg">  </li>
-          <li id="14">  <img src="backimg/img/14.jpg">  </li>
-          <li id="15">  <img src="backimg/img/15.jpg">  </li>
-          <li id="16">  <img src="backimg/img/16.jpg">  </li>
-          <li id="17">  <img src="backimg/img/17.jpg">  </li>
-          <li id="18">  <img src="backimg/img/18.jpg">  </li>
-          <li id="19">  <img src="backimg/img/19.jpg">  </li>
-          <li id="20">  <img src="backimg/img/20.jpg">  </li>
-          <li id="21">  <img src="backimg/img/21.jpg">  </li>
-          <li id="22">  <img src="backimg/img/22.jpg">  </li>
-          <li id="23">  <img src="backimg/img/23.jpg">  </li>
-          <li id="24">  <img src="backimg/img/24.jpg">  </li>
-          <li id="25">  <img src="backimg/img/25.jpg">  </li>
-          <li id="26">  <img src="backimg/img/26.jpg">  </li>
-          <li id="27">  <img src="backimg/img/27.jpg">  </li>
-          <li id="28">  <img src="backimg/img/28.jpg">  </li>
-          <li id="29">  <img src="backimg/img/29.jpg">  </li>
-          <li id="30">  <img src="backimg/img/30.jpg">  </li>
-          <li id="31">  <img src="backimg/img/31.jpg">  </li>
-          <li id="32">  <img src="backimg/img/32.jpg">  </li>
-          <li id="33">  <img src="backimg/img/33.jpg">  </li>
-          <li id="34">  <img src="backimg/img/34.jpg">  </li>
-          <li id="35">  <img src="backimg/img/35.jpg">  </li>
-          <li id="36">  <img src="backimg/img/36.jpg">  </li>
-          <li id="37">  <img src="backimg/img/37.jpg">  </li>
-          <li id="38">  <img src="backimg/img/38.jpg">  </li>
-          <li id="39">  <img src="backimg/img/39.jpg">  </li>
-          <li id="40">  <img src="backimg/img/40.jpg">  </li>
-          <li id="41">  <img src="backimg/img/41.jpg">  </li>
-          <li id="42">  <img src="backimg/img/42.jpg">  </li>
-          <li id="43">  <img src="backimg/img/43.jpg">  </li>
-          <li id="44">  <img src="backimg/img/44.jpg">  </li>
-          <li id="45">  <img src="backimg/img/45.jpg">  </li>
-          <li id="46">  <img src="backimg/img/46.jpg">  </li>
-          <li id="47">  <img src="backimg/img/47.jpg">  </li>
-          <li id="48">  <img src="backimg/img/48.jpg">  </li>
-          <li id="49">  <img src="backimg/img/49.jpg">  </li>
-          <li id="50">  <img src="backimg/img/50.jpg">  </li>
-          <li id="51">  <img src="backimg/img/51.jpg">  </li>
-          <li id="52">  <img src="backimg/img/52.jpg">  </li>
-          <li id="53">  <img src="backimg/img/53.jpg">  </li>
-          <li id="54">  <img src="backimg/img/54.jpg">  </li>
-          <li id="55">  <img src="backimg/img/55.jpg">  </li>
-          <li id="56">  <img src="backimg/img/56.jpg">  </li>
-        </ul>
-        <input type="button" id="submitSortable" value="この並び順を送信">
-      </div><!-- 図図図 -->
+
     </div> <!-- ------------------------------left end-->
 
     <div class="col-md-3"><!------------------  center --------------- -->
@@ -208,8 +149,28 @@
     </div><!------------------  right end --------------- -->
 
   </div><!-- div.row -->
+  <div class="row">
+
+    <div class="col-md-6"> <!------------------row-2 left--------------- -->
+      <p>タイムライン</p>
+    </div><!------------------row-2 left end--------------- -->
+
+    <div class="col-md-6"> <!------------------row-2 right--------------- -->
+
+      <div class="panel-group" id="accordion">
+        <h3>画像プール</h3>
+      </div> 
+
+    </div> <!------------------row-2 right end--------------- -->
+  </div>
 
 </div><!-- div.container -->
+
+<div id="footer" class="navbar">
+  <div class="container">
+    <p class="text-muted">school</p>
+  </div>
+</div>
 
 <!-- 原始ソースコードの制限の原因でここに導入する　js    -->
 <script type="text/javascript" src="js/soundHandler.js"></script>
