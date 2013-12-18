@@ -100,7 +100,7 @@ function backimgHandler(backimg){
     }
     $( '#sortable' ).empty();
     for(var i=0;i<56;i++){
-       
+     
         $( '#sortable' ).append("<img src='"+backimg[i]+"'>")
     }
 }

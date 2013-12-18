@@ -11,10 +11,10 @@ self.addEventListener('message', function(e) {
 			while(1){
 				nowTime = new Date().getTime();
 				if (nowTime - startTime >= data.record[i].runTime - firstActionTime) {
-		        		self.postMessage(data.record[i]);
-		        		break;
-		        }
-		    }
+					self.postMessage(data.record[i]);
+					break;
+				}
+			}
 		}
 	}
 

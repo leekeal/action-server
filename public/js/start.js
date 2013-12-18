@@ -4,18 +4,18 @@ $(document).ready(function(){
 	window.service = new service();
 	//この表でputactionからくれたデータを解析して、対応する関すを呼び出す
 	service.actionHandlers = {
-	    up: 'upHandler',
-	    down: 'downHandler',
-	    right: 'rightHandler',
-	    left: 'leftHandler',
-	    yura: 'yuraHandler',
-        hit:'hitHandler',
+		up: 'upHandler',
+		down: 'downHandler',
+		right: 'rightHandler',
+		left: 'leftHandler',
+		yura: 'yuraHandler',
+		hit:'hitHandler',
 
-	    next: 'nextHandler',
-	    color: 'colorHandler',
-	    moveimg: 'moveimgHandler',
-        backimg:'backimgHandler',
-        sound:'soundHandler',
+		next: 'nextHandler',
+		color: 'colorHandler',
+		moveimg: 'moveimgHandler',
+		backimg:'backimgHandler',
+		sound:'soundHandler',
 		am:'animationHandler',
 		drag:'dragHandler',
 		xyz:'xyzHandler'

@@ -31,8 +31,8 @@ var SOUND_PATH = "./sound/";
         var audio = new Audio(file_path);
         // 再生
         audio.play();
-      };
-      var muse;
+    };
+    var muse;
     //    function ButtonClick(obj) {
     //        var muse;
     //        muse = obj.selectname.options[obj.selectname.selectedIndex].value;
